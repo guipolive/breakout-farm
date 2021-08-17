@@ -5,11 +5,16 @@ import Game from './scenes/Game'
 
 const config: Phaser.Types.Core.GameConfig = {
 	type: Phaser.AUTO,
-	width: 800,
+	width: 1600,
 	height: 600,
 	physics: {
 		default: 'matter',
 		matter: {
+			debug: {
+				boundsColor: 0xff0000,
+				lineColor: 0xff0000,
+				staticLineColor: 0xff0000
+			},
 			gravity: { y: 0 },
 			setBounds: {
 				left: true,
