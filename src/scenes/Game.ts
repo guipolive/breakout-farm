@@ -1,9 +1,11 @@
 import Phaser from 'phaser'
 
+import Paddle from '../game/Paddle'
+
 export default class Game extends Phaser.Scene {
 
     private cursors!: Phaser.Types.Input.Keyboard.CursorKeys
-    private paddle!: Phaser.Physics.Matter.Image
+    private paddle!: Paddle
 
     constructor() {
         super('game');
@@ -20,7 +22,6 @@ export default class Game extends Phaser.Scene {
         const ball = this.matter.add.image(400, 300, 'ball', undefined, {
             // circleRadius: 12
         })
-        ball.setVelocity(5, 5)
 
         const body = ball.body as MatterJS.BodyType
         body.inertia = Infinity
@@ -29,23 +30,24 @@ export default class Game extends Phaser.Scene {
         ball.setBounce(1.2)
 
     /* paddle */
-        this.paddle = this.matter.add.image(width * 0.5, height * 0.9, 'paddle', undefined, {
+        this.paddle = new Paddle(this.matter.world, width * 0.5, height * 0.9, 'paddle', {
             isStatic: true,
             chamfer: {
                 radius: 15
             }
         })
+
+        this.paddle.attachBall(ball)
+
+    //     this.paddle = this.matter.add.image(width * 0.5, height * 0.9, 'paddle', undefined, {
+    //         isStatic: true,
+    //         chamfer: {
+    //             radius: 15
+    //         }
+    //     })
     }
 
     update(t: number, dt: number) {
-        const speed = 10
-
-        if (this.cursors.left?.isDown) {
-            // body.position.x -= 5
-            this.paddle.x -= speed
-        } else if (this.cursors.right?.isDown) {
-            // body.position.x += 5
-            this.paddle.x += speed
-        }
+        this.paddle.update(this.cursors);
     }
 }
