@@ -6,6 +6,10 @@ export default class Game extends Phaser.Scene {
 
     private cursors!: Phaser.Types.Input.Keyboard.CursorKeys
     private paddle!: Paddle
+    private ball!: Phaser.Physics.Matter.Image
+
+    private livesLabel!: Phaser.GameObjects.Text
+    private lives = 3
 
     constructor() {
         super('game');
@@ -13,21 +17,23 @@ export default class Game extends Phaser.Scene {
 
     init() {
         this.cursors = this.input.keyboard.createCursorKeys()
+
+        this.lives = 3
     }
 
     create() {
         const { width, height } = this.scale
 
     /* ball */
-        const ball = this.matter.add.image(400, 300, 'ball', undefined, {
-            // circleRadius: 12
+        this.ball = this.matter.add.image(400, 300, 'ball', undefined, {
+            circleRadius: 12
         })
 
-        const body = ball.body as MatterJS.BodyType
+        const body = this.ball.body as MatterJS.BodyType
         body.inertia = Infinity
         // this.matter.body.setInertia(body, Infinity)
-        ball.setFrictionAir(0)
-        ball.setBounce(1.2)
+        this.ball.setFrictionAir(0)
+        this.ball.setBounce(1.5)
 
     /* paddle */
         this.paddle = new Paddle(this.matter.world, width * 0.5, height * 0.9, 'paddle', {
@@ -37,17 +43,26 @@ export default class Game extends Phaser.Scene {
             }
         })
 
-        this.paddle.attachBall(ball)
+        this.paddle.attachBall(this.ball)
 
-    //     this.paddle = this.matter.add.image(width * 0.5, height * 0.9, 'paddle', undefined, {
-    //         isStatic: true,
-    //         chamfer: {
-    //             radius: 15
-    //         }
-    //     })
+        this.livesLabel = this.add.text(10, 10, `Vidas: ${this.lives}`, {
+            fontSize: '30px',
+            fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif'
+        })
     }
 
     update(t: number, dt: number) {
+        if (this.ball.y > this.scale.height + 100) {
+            --this.lives
+            this.livesLabel.text = `Vidas: ${this.lives}`
+            this.paddle.attachBall(this.ball)
+        }
+
+        const isSpaceJustDown = Phaser.Input.Keyboard.JustDown(this.cursors.space!)
+        if (isSpaceJustDown)
+            this.paddle.launch()
+
+
         this.paddle.update(this.cursors);
     }
 }

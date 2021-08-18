@@ -5,7 +5,7 @@ import Game from './scenes/Game'
 
 const config: Phaser.Types.Core.GameConfig = {
 	type: Phaser.AUTO,
-	width: 1600,
+	width: 800,
 	height: 600,
 	physics: {
 		default: 'matter',
@@ -20,7 +20,7 @@ const config: Phaser.Types.Core.GameConfig = {
 				left: true,
 				right: true,
 				top: true,
-				bottom: true // TODO: remover
+				bottom: false
 			}
 		}
 	},
