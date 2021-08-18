@@ -10,11 +10,11 @@ const config: Phaser.Types.Core.GameConfig = {
 	physics: {
 		default: 'matter',
 		matter: {
-			debug: {
-				boundsColor: 0xff0000,
-				lineColor: 0xff0000,
-				staticLineColor: 0xff0000
-			},
+			// debug: {
+			// 	boundsColor: 0xff0000,
+			// 	lineColor: 0xff0000,
+			// 	staticLineColor: 0xff0000
+			// },
 			gravity: { y: 0 },
 			setBounds: {
 				left: true,
