@@ -11,6 +11,8 @@ export default class Game extends Phaser.Scene {
     private livesLabel!: Phaser.GameObjects.Text
     private lives = 3
 
+    private animals:Phaser.Physics.Matter.Sprite[] = []
+
     constructor() {
         super('game');
     }
@@ -23,6 +25,22 @@ export default class Game extends Phaser.Scene {
 
     create() {
         const { width, height } = this.scale
+
+    /* cow */
+
+        const map = this.make.tilemap({key: 'level1'})
+        const tileset = map.addTilesetImage('cow', 'cow')
+
+        map.createLayer('Level', tileset)
+        this.animals = map.createFromTiles(1, 0, { key: 'cow' })
+            .map(go => {
+                go.x += go.width * 0.5
+                go.y += go.height * 0.5
+
+                const cow = this.matter.add.gameObject(go, { isStatic: true}) as Phaser.Physics.Matter.Sprite
+                cow.setData('type', 'animal')
+                return cow;
+            })
 
     /* ball */
         this.ball = this.matter.add.image(400, 300, 'ball', undefined, {
@@ -49,6 +67,24 @@ export default class Game extends Phaser.Scene {
             fontSize: '30px',
             fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif'
         })
+
+        this.ball.setOnCollide(this.handleBallCollide.bind(this))
+    }
+
+    private handleBallCollide(data: Phaser.Types.Physics.Matter.MatterCollisionData) {
+        const { bodyA } = data
+
+        const goA = bodyA.gameObject as Phaser.GameObjects.GameObject
+
+        if (goA?.getData('type') !== 'animal')
+            return
+
+        const index = this.animals.findIndex(anm => anm === goA)
+        if (index >= 0) {
+            this.animals.splice(index, 1)
+        }
+
+        goA.destroy(true)
     }
 
     update(t: number, dt: number) {
