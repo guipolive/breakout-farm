@@ -84,13 +84,26 @@ export default class Game extends Phaser.Scene {
             this.animals.splice(index, 1)
         }
 
+        this.sound.play('tone1')
         goA.destroy(true)
+
+        if (this.animals.length <= 0) {
+            this.sound.play('level1win')
+            this.scene.start('game-over', {title: 'Você venceu!', bgColor: '#fcba03'})
+        }
     }
 
     update(t: number, dt: number) {
         if (this.ball.y > this.scale.height + 100) {
             --this.lives
             this.livesLabel.text = `Vidas: ${this.lives}`
+
+            if (this.lives <= 0) {
+                this.sound.play('level1lost')
+                this.scene.start('game-over', {title: 'Você perdeu!'})
+                return
+            }
+
             this.paddle.attachBall(this.ball)
         }
 

@@ -37,7 +37,7 @@ export default class Paddle extends Phaser.Physics.Matter.Image {
         const vec = new Phaser.Math.Vector2(vx, vy).normalize().scale(8)
 
         this.ball.setVelocity(vec.x, vec.y)
-
+        
         this.ball = undefined
     }
 
@@ -45,10 +45,8 @@ export default class Paddle extends Phaser.Physics.Matter.Image {
         const speed = 10
 
         if (cursors.left?.isDown) {
-            // body.position.x -= 5
             this.x -= speed
         } else if (cursors.right?.isDown) {
-            // body.position.x += 5
             this.x += speed
         }
 
