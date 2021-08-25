@@ -11,7 +11,7 @@ export default class Game extends Phaser.Scene {
     private livesLabel!: Phaser.GameObjects.Text
     private lives = 3
 
-    private animals:Phaser.Physics.Matter.Sprite[] = []
+    private animals: Phaser.Physics.Matter.Sprite[] = []
 
     constructor() {
         super('game');
