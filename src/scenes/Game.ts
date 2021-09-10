@@ -89,7 +89,7 @@ export default class Game extends Phaser.Scene {
 
         if (this.animals.length <= 0) {
             this.sound.play('level1win')
-            this.scene.start('game-over', {title: 'Você venceu!', bgColor: '#fcba03'})
+            this.scene.start('game-over', {title: 'Você venceu!', bgColor: '#fcba03', win: true})
         }
     }
 
@@ -100,7 +100,7 @@ export default class Game extends Phaser.Scene {
 
             if (this.lives <= 0) {
                 this.sound.play('level1lost')
-                this.scene.start('game-over', {title: 'Você perdeu!'})
+                this.scene.start('game-over', {title: 'Você perdeu!', win: false})
                 return
             }
 

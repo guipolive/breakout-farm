@@ -8,6 +8,9 @@ const config: Phaser.Types.Core.GameConfig = {
 	type: Phaser.AUTO,
 	width: 800,
 	height: 600,
+	dom: {
+		createContainer: true
+	},
 	physics: {
 		default: 'matter',
 		matter: {
