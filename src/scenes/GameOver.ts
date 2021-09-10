@@ -40,9 +40,9 @@ export default class GameOver extends Phaser.Scene {
         
         if (isSpaceJustDown) {
             if (this.isWin)
-                console.log('Atualizar')
+                this.scene.start('game', { level: 2 })
             else
-                this.scene.start('game')
+                this.scene.start('game', { level: 1 })
         }
     }
 }

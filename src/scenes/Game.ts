@@ -13,6 +13,11 @@ export default class Game extends Phaser.Scene {
 
     private animals: Phaser.Physics.Matter.Sprite[] = []
 
+    private levels = [
+        'level1',
+        'level2'
+    ]
+
     constructor() {
         super('game');
     }
@@ -23,12 +28,14 @@ export default class Game extends Phaser.Scene {
         this.lives = 3
     }
 
-    create() {
+    create(data: { level: number} = { level: 1 }) {
         const { width, height } = this.scale
+        const level = this.levels[data.level - 1]
+        console.log(level)
 
     /* cow */
 
-        const map = this.make.tilemap({key: 'level1'})
+        const map = this.make.tilemap({key: level ?? 'level1'})
         const tileset = map.addTilesetImage('cow', 'cow')
 
         map.createLayer('Level', tileset)

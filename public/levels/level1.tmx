@@ -1,13 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="right-down" width="8" height="10" tilewidth="96" tileheight="48" infinite="0" nextlayerid="2" nextobjectid="1">
+<map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="right-down" width="8" height="10" tilewidth="96" tileheight="48" infinite="0" nextlayerid="6" nextobjectid="1">
+ <editorsettings>
+  <export target="level2.json" format="json"/>
+ </editorsettings>
+ <tileset firstgid="1" name="level2" tilewidth="96" tileheight="48" tilecount="1" columns="1">
+  <image source="../assets/chicken.png" width="96" height="48"/>
+ </tileset>
+ <tileset firstgid="2" name="chicken2" tilewidth="96" tileheight="48" tilecount="1" columns="1">
+  <image source="../assets/chicken2.png" width="96" height="48"/>
+ </tileset>
  <layer id="1" name="Tile Layer 1" width="8" height="10">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,
+0,1,1,0,0,2,2,0,
+0,1,1,0,0,2,2,0,
+0,1,1,1,2,2,2,0,
 0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,
+0,0,0,1,2,0,0,0,
 0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,
