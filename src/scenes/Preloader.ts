@@ -13,6 +13,7 @@ export default class Preloader extends Phaser.Scene {
 
         this.load.tilemapTiledJSON('level1', 'levels/level1.json')
         this.load.tilemapTiledJSON('level2', 'levels/level2.json')
+        this.load.tilemapTiledJSON('level3', 'levels/level3.json')
 
         this.load.audio('tone1', 'assets/tone1.wav')
         this.load.audio('level1win', 'assets/level1win.wav')

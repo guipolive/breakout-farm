@@ -9,14 +9,17 @@ export default class Game extends Phaser.Scene {
     private paddle!: Paddle
     private ball!: Ball
 
+    private level!: number
+
     private livesLabel!: Phaser.GameObjects.Text
-    private lives = 5
+    private lives = 3
 
     private animals: Phaser.Physics.Matter.Sprite[] = []
 
     private levels = [
         'level1',
-        'level2'
+        'level2',
+        'level3'
     ]
 
     constructor() {
@@ -26,13 +29,14 @@ export default class Game extends Phaser.Scene {
     init() {
         this.cursors = this.input.keyboard.createCursorKeys()
 
-        this.lives = 3
+        this.lives = 7
     }
 
     create(data: { level: number} = { level: 1 }) {
         const { width, height } = this.scale
+        this.level = data.level
+
         const level = this.levels[data.level - 1]
-        console.log(level)
 
     /* cow */
 
@@ -91,7 +95,7 @@ export default class Game extends Phaser.Scene {
 
         if (this.animals.length <= 0) {
             this.sound.play('level1win')
-            this.scene.start('game-over', {title: 'Você venceu!', bgColor: '#fcba03', win: true})
+            this.scene.start('game-over', {title: 'Você venceu!', bgColor: '#fcba03', win: true, level: this.level})
         }
     }
 
@@ -102,7 +106,7 @@ export default class Game extends Phaser.Scene {
 
             if (this.lives <= 0) {
                 this.sound.play('level1lost')
-                this.scene.start('game-over', {title: 'Você perdeu!', win: false})
+                this.scene.start('game-over', {title: 'Você perdeu!', win: false, level: this.level})
                 return
             }
 
