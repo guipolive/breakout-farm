@@ -1,15 +1,16 @@
 import Phaser from 'phaser'
 
 import Paddle from '../game/Paddle'
+import Ball from '../game/Ball'
 
 export default class Game extends Phaser.Scene {
 
     private cursors!: Phaser.Types.Input.Keyboard.CursorKeys
     private paddle!: Paddle
-    private ball!: Phaser.Physics.Matter.Image
+    private ball!: Ball
 
     private livesLabel!: Phaser.GameObjects.Text
-    private lives = 3
+    private lives = 5
 
     private animals: Phaser.Physics.Matter.Sprite[] = []
 
@@ -50,15 +51,9 @@ export default class Game extends Phaser.Scene {
             })
 
     /* ball */
-        this.ball = this.matter.add.image(400, 300, 'ball', undefined, {
-            circleRadius: 12
+        this.ball = new Ball(this.matter.world, 400, 300, 'ball', {
+            circleRadius: 50
         })
-
-        const body = this.ball.body as MatterJS.BodyType
-        body.inertia = Infinity
-        // this.matter.body.setInertia(body, Infinity)
-        this.ball.setFrictionAir(0)
-        this.ball.setBounce(1.5)
 
     /* paddle */
         this.paddle = new Paddle(this.matter.world, width * 0.5, height * 0.9, 'paddle', {
@@ -100,7 +95,7 @@ export default class Game extends Phaser.Scene {
         }
     }
 
-    update(t: number, dt: number) {
+    update() {
         if (this.ball.y > this.scale.height + 100) {
             --this.lives
             this.livesLabel.text = `Vidas: ${this.lives}`
